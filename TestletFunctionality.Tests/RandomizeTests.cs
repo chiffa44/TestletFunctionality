@@ -44,5 +44,17 @@ namespace TestletFunctionality.Tests
             //Assert
             CollectionAssert.AreNotEqual(tests, actualResult, "Initial order of tests should be not the same with randomized");
         }
+
+        [TestMethod]
+        public void DifferentOrderEachTime()
+        {
+            //Arrange
+            Testlet testlet = new Testlet("testId", tests.ToList());
+            //Act
+            var actualResult1 = testlet.Randomize();
+            var actualResult2 = testlet.Randomize();
+            //Assert
+            CollectionAssert.AreNotEqual(actualResult1, actualResult2, "There should be a different order in the testlet for each randomization");
+        }
     }
 }
