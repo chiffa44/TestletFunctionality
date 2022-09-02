@@ -8,12 +8,12 @@ namespace TestletFunctionality.Tests
     {
         private List<Test> tests = new List<Test>()
             {new Test("1", TestTypeEnum.Pretest),
-             new Test("2", TestTypeEnum.Operational),
+             new Test("2", TestTypeEnum.Pretest),
              new Test("3", TestTypeEnum.Operational),
              new Test("4", TestTypeEnum.Operational),
              new Test("5", TestTypeEnum.Pretest),
              new Test("6", TestTypeEnum.Operational),
-             new Test("7", TestTypeEnum.Pretest),
+             new Test("7", TestTypeEnum.Operational),
              new Test("8", TestTypeEnum.Operational),
              new Test("9", TestTypeEnum.Pretest),
              new Test("10", TestTypeEnum.Operational),
@@ -31,6 +31,17 @@ namespace TestletFunctionality.Tests
                 string.Format("First test should be pretest"));
             Assert.IsTrue(actualResult[0].Type == TestTypeEnum.Pretest && actualResult[1].Type == TestTypeEnum.Pretest,
                 string.Format("Second test should be pretest"));
+        }
+
+        [TestMethod]
+        public void RandomizedTestletIsNotEqualInitial()
+        {
+            //Arrange
+            Testlet testlet = new Testlet("testId", tests);
+            //Act
+            var actualResult = testlet.Randomize();
+            //Assert
+            CollectionAssert.AreNotEqual(tests, actualResult);
         }
     }
 }
