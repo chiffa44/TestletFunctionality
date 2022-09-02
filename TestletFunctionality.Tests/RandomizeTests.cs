@@ -24,7 +24,7 @@ namespace TestletFunctionality.Tests
         public void TwoFirstPretests()
         {
             //Arrange
-            Testlet testlet = new Testlet("testId", tests.ToList());
+            Testlet testlet = new Testlet("testId", tests);
             //Act
             var actualResult = testlet.Randomize();
             //Assert
@@ -38,7 +38,7 @@ namespace TestletFunctionality.Tests
         public void RandomizedTestletIsNotEqualInitial()
         {
             //Arrange
-            Testlet testlet = new Testlet("testId", tests.ToList());
+            Testlet testlet = new Testlet("testId", tests);
             //Act
             var actualResult = testlet.Randomize();
             //Assert

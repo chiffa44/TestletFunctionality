@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace TestletFunctionality
@@ -9,15 +11,19 @@ namespace TestletFunctionality
         private static Random rng = new Random();
 
         //Fisher–Yates shuffle
-        public static void Shuffle<T>(this IList<T> list)
+        public static List<T> Shuffle<T>(this IList<T> list)
         {
-            int count = list.Count;
+            //copy of List
+            List<T> randomizedCopy = list.ToList();
+            int count = randomizedCopy.Count;
             while (count > 1)
             {
                 count--;
                 int k = rng.Next(count + 1);
-                (list[k], list[count]) = (list[count], list[k]);
+                (randomizedCopy[k], randomizedCopy[count]) = (randomizedCopy[count], randomizedCopy[k]);
             }
+
+            return randomizedCopy;
 
         }
     }

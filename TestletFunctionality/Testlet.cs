@@ -15,12 +15,11 @@ namespace TestletFunctionality
         }
         public List<Test> Randomize()
         {
-            Items.Shuffle();
-            var pretests = Items.Where(t => t.Type == TestTypeEnum.Pretest).Take(2);
-            var other = Items.Except(pretests);
-            Items = pretests.Concat(other).ToList();
+            var randomized = Items.Shuffle();
+            var pretests = randomized.Where(t => t.Type == TestTypeEnum.Pretest).Take(2);
+            var other = randomized.Except(pretests);
+            return pretests.Concat(other).ToList();
 
-            return Items;
         }
     }
     public class Test
