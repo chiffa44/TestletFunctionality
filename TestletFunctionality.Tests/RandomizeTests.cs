@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TestletFunctionality.Tests
@@ -23,7 +24,7 @@ namespace TestletFunctionality.Tests
         public void TwoFirstPretests()
         {
             //Arrange
-            Testlet testlet = new Testlet("testId", tests);
+            Testlet testlet = new Testlet("testId", tests.ToList());
             //Act
             var actualResult = testlet.Randomize();
             //Assert
@@ -37,11 +38,11 @@ namespace TestletFunctionality.Tests
         public void RandomizedTestletIsNotEqualInitial()
         {
             //Arrange
-            Testlet testlet = new Testlet("testId", tests);
+            Testlet testlet = new Testlet("testId", tests.ToList());
             //Act
             var actualResult = testlet.Randomize();
             //Assert
-            CollectionAssert.AreNotEqual(tests, actualResult);
+            CollectionAssert.AreNotEqual(tests, actualResult, "Initial order of tests should be not the same with randomized");
         }
     }
 }
