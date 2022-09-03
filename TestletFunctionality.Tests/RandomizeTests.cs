@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -55,6 +56,25 @@ namespace TestletFunctionality.Tests
             var actualResult2 = testlet.Randomize();
             //Assert
             CollectionAssert.AreNotEqual(actualResult1, actualResult2, "There should be a different order in the testlet for each randomization");
+        }
+
+        [TestMethod]
+        public void NoDuplicatesInTestlet()
+        {
+            //Arrange
+            Testlet testlet = new Testlet("testId", tests.ToList());
+            int initialSum = tests.Select(test => Int32.Parse(test.Id)).Sum();
+            //Act 
+            for (int i = 0; i < 50; i++)
+            {
+                var actualResult=testlet.Randomize();
+                //Assert
+                //sum of all ids should be the same with initial sum of all ids in testlet, if this is wrong there are duplicated tests
+                int currentSum = actualResult.Select(test => Int32.Parse(test.Id)).Sum();
+                Assert.AreEqual(initialSum, currentSum, string.Format("Expected sum of test ids: {0}, Actual sum of test ids: {1} ", initialSum, currentSum));
+            }
+
+            
         }
     }
 }
