@@ -11,7 +11,7 @@ namespace TestletFunctionality
         public Testlet(string testletId, List<Test> items)
         {
             Id = testletId;
-            Items = items;
+            Items = new List<Test>(items);
         }
         public List<Test> Randomize()
         {
