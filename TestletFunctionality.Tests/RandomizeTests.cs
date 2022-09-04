@@ -141,5 +141,11 @@ namespace TestletFunctionality.Tests
             }
 
         }
+
+        [TestMethod]
+        public void ConstructorThrowsArgumentNullException()
+        {
+            Assert.ThrowsException<ArgumentNullException>(()=>new Testlet("testId", null));
+        }
     }
 }
