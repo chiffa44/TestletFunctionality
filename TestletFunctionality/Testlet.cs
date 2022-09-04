@@ -10,6 +10,15 @@ namespace TestletFunctionality
         private List<Test> Items;
         public Testlet(string testletId, List<Test> items)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException("Collection of tests cannot be null.", nameof(items));
+            }
+            if (items.Count == 0)
+            {
+                throw new ArgumentException("Collection of tests cannot be empty.", nameof(items));
+            }
+
             Id = testletId;
             Items = new List<Test>(items);
         }
