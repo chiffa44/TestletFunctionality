@@ -63,7 +63,7 @@ namespace TestletFunctionality.Tests
         public void DifferentOrderEachTime()
         {
             //Arrange
-            Testlet testlet = new Testlet("testId", generalTests.ToList());
+            Testlet testlet = new Testlet("testId", generalTests);
             //Act
             var actualResult1 = testlet.Randomize();
             var actualResult2 = testlet.Randomize();
@@ -75,12 +75,13 @@ namespace TestletFunctionality.Tests
         public void NoDuplicatesInTestlet()
         {
             //Arrange
-            Testlet testlet = new Testlet("testId", generalTests.ToList());
+            Testlet testlet = new Testlet("testId", generalTests);
             int initialSum = generalTests.Select(test => Int32.Parse(test.Id)).Sum();
-            //Act 
+            
             for (int i = 0; i < 50; i++)
             {
-                var actualResult=testlet.Randomize();
+                //Act 
+                var actualResult =testlet.Randomize();
                 //Assert
                 //sum of all ids should be the same with initial sum of all ids in testlet, if this is wrong there are duplicated generalTests
                 int currentSum = actualResult.Select(test => Int32.Parse(test.Id)).Sum();
@@ -105,9 +106,40 @@ namespace TestletFunctionality.Tests
         }
 
         [TestMethod]
+        //Check that randomization gives a uniform distribution (approximately)
+        //TODO: Better as integration test with large amount of data
         public void ProperRandomizing()
         {
-            
+            //Arrange
+            int numberOfTestlets = 5000;
+            int numberOfTests = generalTests.Count;
+            int initialSum = generalTests.Select(test => Int32.Parse(test.Id)).Sum();
+            //mathematical expectation (average) for uniform distribution (ideally) = sum(value*probability) 
+            float probabilityIdeal = 1 / (float)numberOfTests;
+            float avgIdeal = initialSum * probabilityIdeal;
+            float[] avgReal = new float[numberOfTests];
+            for (int i = 0; i < numberOfTestlets; i++)
+            {
+                //Act
+                var actualResult = generalTests.Shuffle();
+                
+                //real mathematical expectation (average) for 1st, 2nd ..., 10 place in Testlet
+                for (int j = 0; j < numberOfTests; j++)
+                {
+                    avgReal[j] += Int32.Parse(actualResult[j].Id);
+                }
+
+            }
+            //Assert
+            //should be uniform distribution +- 2,5%
+            float minThreshold = avgIdeal - (float)0.025 * avgIdeal;
+            float maxThreshold = avgIdeal + (float)0.025 * avgIdeal;
+            for (int i = 0; i < numberOfTests; i++)
+            {
+                avgReal[i] /= numberOfTestlets;
+                Assert.IsTrue(avgReal[i] > minThreshold && avgReal[i] < maxThreshold, string.Format("Average id for {0} place in Testlet should be between {1} and {2}, actual: {3}", i, minThreshold, maxThreshold, avgReal[i]));
+            }
+
         }
     }
 }
