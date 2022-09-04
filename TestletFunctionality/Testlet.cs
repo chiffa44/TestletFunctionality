@@ -12,12 +12,13 @@ namespace TestletFunctionality
         {
             if (items == null)
             {
-                throw new ArgumentNullException("Collection of tests cannot be null.", nameof(items));
+                throw new ArgumentNullException(nameof(items), "Collection of tests cannot be null." );
             }
             if (items.Count == 0)
             {
                 throw new ArgumentException("Collection of tests cannot be empty.", nameof(items));
             }
+
 
             Id = testletId;
             Items = new List<Test>(items);
