@@ -121,7 +121,7 @@ namespace TestletFunctionality.Tests
         [TestMethod]
         //Check that randomization gives a uniform distribution (approximately)
         //TODO: Better as functional test with large amount of data
-        public void ProperRandomizing()
+        public void ProperRandomization()
         {
             //Arrange
             int numberOfTestlets = 5000;
