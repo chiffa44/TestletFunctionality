@@ -26,7 +26,7 @@ namespace TestletFunctionality
         public List<Test> Randomize()
         {
             var randomized = Items.Shuffle();
-            var pretests = randomized.Where(t => t.Type == TestTypeEnum.Pretest).Take(2);
+            List<Test> pretests = randomized.Where(t => t.Type == TestTypeEnum.Pretest).Take(2).ToList();
             var other = randomized.Except(pretests);
             return pretests.Concat(other).ToList();
 

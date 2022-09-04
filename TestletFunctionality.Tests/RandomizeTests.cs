@@ -34,6 +34,19 @@ namespace TestletFunctionality.Tests
             new Test("10", TestTypeEnum.Operational),
         };
 
+        private List<Test> testsWithOnePretest = new List<Test>()
+        {new Test("1", TestTypeEnum.Operational),
+            new Test("2", TestTypeEnum.Pretest),
+            new Test("3", TestTypeEnum.Operational),
+            new Test("4", TestTypeEnum.Operational),
+            new Test("5", TestTypeEnum.Operational),
+            new Test("6", TestTypeEnum.Operational),
+            new Test("7", TestTypeEnum.Operational),
+            new Test("8", TestTypeEnum.Operational),
+            new Test("9", TestTypeEnum.Operational),
+            new Test("10", TestTypeEnum.Operational),
+        };
+
         [TestMethod]
         public void TwoFirstPretests()
         {
@@ -107,7 +120,7 @@ namespace TestletFunctionality.Tests
 
         [TestMethod]
         //Check that randomization gives a uniform distribution (approximately)
-        //TODO: Better as integration test with large amount of data
+        //TODO: Better as functional test with large amount of data
         public void ProperRandomizing()
         {
             //Arrange
@@ -153,5 +166,6 @@ namespace TestletFunctionality.Tests
         {
             Assert.ThrowsException<ArgumentException>(() => new Testlet("testId", new List<Test>()));
         }
+
     }
 }
