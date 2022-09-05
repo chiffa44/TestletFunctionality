@@ -46,12 +46,13 @@ namespace TestletFunctionality.Tests
             new Test("9", TestTypeEnum.Operational),
             new Test("10", TestTypeEnum.Operational),
         };
+        private readonly IShuffler<Test> myShuffler = new FisherYatesShuffler<Test>();
 
         [TestMethod]
         public void TwoFirstPretests()
         {
             Testlet testlet = new Testlet("testId", generalTests);
-            var actualResult = testlet.Randomize();
+            var actualResult = testlet.Randomize(myShuffler);
             Assert.IsTrue(actualResult[0].Type == TestTypeEnum.Pretest, "First test should be pretest");
             Assert.IsTrue(actualResult[1].Type == TestTypeEnum.Pretest, "Second test should be pretest");
         }
@@ -60,7 +61,7 @@ namespace TestletFunctionality.Tests
         public void RandomizedTestletIsNotEqualInitial()
         {
             Testlet testlet = new Testlet("testId", generalTests);
-            var actualResult = testlet.Randomize();
+            var actualResult = testlet.Randomize(myShuffler);
             CollectionAssert.AreNotEqual(generalTests, actualResult, "Initial order of generalTests should be not the same with randomized");
         }
 
@@ -68,8 +69,8 @@ namespace TestletFunctionality.Tests
         public void DifferentOrderEachTime()
         {
             Testlet testlet = new Testlet("testId", generalTests);
-            var actualResult1 = testlet.Randomize();
-            var actualResult2 = testlet.Randomize();
+            var actualResult1 = testlet.Randomize(myShuffler);
+            var actualResult2 = testlet.Randomize(myShuffler);
             CollectionAssert.AreNotEqual(actualResult1, actualResult2, "There should be a different order in the testlet for each randomization");
         }
 
@@ -81,7 +82,7 @@ namespace TestletFunctionality.Tests
 
             for (int i = 0; i < 50; i++)
             {
-                var actualResult = testlet.Randomize();
+                var actualResult = testlet.Randomize(myShuffler);
                 //sum of all ids should be the same with initial sum of all ids in testlet, if this is wrong there are duplicated generalTests
                 int currentSum = actualResult.Select(test => Int32.Parse(test.Id)).Sum();
                 Assert.AreEqual(initialSum, currentSum, string.Format("Expected sum of test ids: {0}, Actual sum of test ids: {1} ", initialSum, currentSum));
@@ -92,7 +93,7 @@ namespace TestletFunctionality.Tests
         public void SameIdTestsNoDuplicates()
         {
             Testlet testlet = new Testlet("testId", testsWithDuplicatedId);
-            var actualResult = testlet.Randomize();
+            var actualResult = testlet.Randomize(myShuffler);
             var testsWithId2 = actualResult.Where(t => t.Id == "2").ToList();
             Assert.AreEqual(2, testsWithId2.Count());
             Assert.IsTrue(testsWithId2[0].Type != testsWithId2[1].Type, "Tests with id = 2 should have different types");
@@ -112,7 +113,7 @@ namespace TestletFunctionality.Tests
             float[] avgReal = new float[numberOfTests];
             for (int i = 0; i < numberOfTestlets; i++)
             {
-                var actualResult = generalTests.FisherYatesShuffle();
+                var actualResult = myShuffler.Shuffle(generalTests);
                 //real mathematical expectation (average) for 1st, 2nd ..., 10 place in Testlet
                 for (int j = 0; j < numberOfTests; j++)
                 {

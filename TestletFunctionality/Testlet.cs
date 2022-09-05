@@ -27,9 +27,9 @@ namespace TestletFunctionality
             Items = new List<Test>(items);
         }
 
-        public List<Test> Randomize()
+        public List<Test> Randomize(IShuffler<Test> shuffler)
         {
-            var randomized = Items.FisherYatesShuffle();
+            var randomized = shuffler.Shuffle(Items);
             List<Test> pretests = randomized.Where(t => t.Type == TestTypeEnum.Pretest).Take(2).ToList();
             var other = randomized.Except(pretests);
             return pretests.Concat(other).ToList();

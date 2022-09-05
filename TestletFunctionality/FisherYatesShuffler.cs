@@ -6,11 +6,11 @@ using System.Text;
 
 namespace TestletFunctionality
 {
-    public static class ShuffleHelper
+    public class FisherYatesShuffler<T> : IShuffler<T>
     {
         private static Random rng = new Random();
 
-        public static List<T> FisherYatesShuffle<T>(this IList<T> list)
+        public IList<T> Shuffle(IList<T> list)
         {
             List<T> randomizedCopy = list.ToList();
             int count = randomizedCopy.Count;
