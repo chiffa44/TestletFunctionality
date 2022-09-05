@@ -6,8 +6,9 @@ namespace TestletFunctionality
 {
     public class Testlet
     {
-        public string Id;
-        private List<Test> Items;
+        public string Id { get; }
+        private List<Test> Items { get; }
+
         public Testlet(string testletId, List<Test> items)
         {
             if (items == null)
@@ -37,8 +38,8 @@ namespace TestletFunctionality
     }
     public class Test
     {
-        public string Id;
-        public TestTypeEnum Type;
+        public string Id { get; set;}
+        public TestTypeEnum Type { get; set;}
         public Test(string id, TestTypeEnum type)
         {
             Id = id;
