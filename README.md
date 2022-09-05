@@ -12,5 +12,4 @@ items.
 1. The class library was created using .Net Core 2.1 and MSTest 
 2. For order randomization is used [Fisher-Yates shuffle](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle).
 Validated in test ProperRandomization on 5000 testlets using a check that the distribution follows a uniform distribution +- 2.5%.
-3. Library throws exceptions if the test collection is empty or null.
-4. Algorithm is not thread safe (Random isn't thread safe).
+3. Algorithm is not thread safe (Random isn't thread safe).
