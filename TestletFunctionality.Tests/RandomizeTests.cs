@@ -34,13 +34,13 @@ namespace TestletFunctionality.Tests
             new Test("10", TestTypeEnum.Operational),
         };
 
-        private List<Test> testsWithTwoPretest = new List<Test>()
+        private List<Test> testsWithOnePretest = new List<Test>()
         {new Test("1", TestTypeEnum.Operational),
             new Test("2", TestTypeEnum.Pretest),
             new Test("3", TestTypeEnum.Operational),
             new Test("4", TestTypeEnum.Operational),
             new Test("5", TestTypeEnum.Operational),
-            new Test("6", TestTypeEnum.Pretest),
+            new Test("6", TestTypeEnum.Operational),
             new Test("7", TestTypeEnum.Operational),
             new Test("8", TestTypeEnum.Operational),
             new Test("9", TestTypeEnum.Operational),
@@ -162,15 +162,9 @@ namespace TestletFunctionality.Tests
         }
 
         [TestMethod]
-        public void ConstructorThrowsArgumentExceptionEmptyItems()
+        public void ConstructorThrowsArgumentException()
         {
             Assert.ThrowsException<ArgumentException>(() => new Testlet("testId", new List<Test>()));
-        }
-
-        [TestMethod]
-        public void ConstructorThrowsArgumentExceptionNot4Pretests()
-        {
-            Assert.ThrowsException<ArgumentException>(() => new Testlet("testId", testsWithTwoPretest));
         }
 
     }
