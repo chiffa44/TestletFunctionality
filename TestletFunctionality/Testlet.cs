@@ -18,7 +18,10 @@ namespace TestletFunctionality
             {
                 throw new ArgumentException("Collection of tests cannot be empty.", nameof(items));
             }
-
+            if (items.Count(t => t.Type == TestTypeEnum.Pretest) != 4)
+            {
+                throw new ArgumentException("Collection of tests should contain 4 pretests.", nameof(items));
+            }
 
             Id = testletId;
             Items = new List<Test>(items);
