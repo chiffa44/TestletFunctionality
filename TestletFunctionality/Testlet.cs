@@ -19,9 +19,9 @@ namespace TestletFunctionality
             {
                 throw new ArgumentException("Collection of tests cannot be empty.", nameof(items));
             }
-            if (items.Count(t => t.Type == TestTypeEnum.Pretest) != 4)
+            if (items.Count(t => t.Type == TestTypeEnum.Pretest) != Configuration.NumberOfPretestsInTestlet)
             {
-                throw new ArgumentException("Collection of tests should contain 4 pretests.", nameof(items));
+                throw new ArgumentException($"Collection of tests should contain {Configuration.NumberOfPretestsInTestlet} pretests.", nameof(items));
             }
             Id = testletId;
             Items = new List<Test>(items);
@@ -30,7 +30,7 @@ namespace TestletFunctionality
         public List<Test> Randomize(IShuffler<Test> shuffler)
         {
             var randomized = shuffler.Shuffle(Items);
-            List<Test> pretests = randomized.Where(t => t.Type == TestTypeEnum.Pretest).Take(2).ToList();
+            List<Test> pretests = randomized.Where(t => t.Type == TestTypeEnum.Pretest).Take(Configuration.NumberOfPretestAtBeginning).ToList();
             var other = randomized.Except(pretests);
             return pretests.Concat(other).ToList();
         }
